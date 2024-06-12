@@ -1,0 +1,35 @@
+.main-content {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .logo-container {
+    box-sizing: border-box;
+    width: 280px;
+  }
+  
+  .right-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+  }
+  
+  .small-button {
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+    padding: 8px 12px; /* Reducción del padding para reducir el tamaño del botón */
+  }

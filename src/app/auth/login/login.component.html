@@ -1,0 +1,23 @@
+<div class="login-container">
+  <img src="assets/lemaLogo.png" alt="Logo" class="logo">
+  <h2>Iniciar Sesión</h2>
+  <form (ngSubmit)="login()" #loginForm="ngForm">
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Correo Electrónico" name="username" [(ngModel)]="loginFormValue.username" required>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput type="password" placeholder="Contraseña" name="password" [(ngModel)]="loginFormValue.password" required>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Clave Cliente" name="claveCliente" [(ngModel)]="loginFormValue.claveCliente" required>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+
+    <div class="reset-password-link">
+      <a routerLink="/reset-password">¿Olvidaste la Contraseña?</a>
+    </div>
+  </form>
+</div>
