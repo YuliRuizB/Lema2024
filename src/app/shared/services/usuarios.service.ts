@@ -94,6 +94,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       )
     }
 
+
     getStudentsByGrade(claveGrado:string,claveCliente:string ){    
       return this.afs.collection('students', (ref:any) => 
       ref
@@ -223,4 +224,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         return newId;
       });
     }
+    updateStudent(studentId: string, student:any) {
+      const studentRef = this.afs.collection('students').doc(studentId);
+      return studentRef.update(student);
+    }
+    updateStudentAvatar(userId: string, photoURL: string) {
+      // this.message.loading('Actualizando ...');
+      console.log(userId);
+      console.log(photoURL);
+       const vendorRef = this.afs.collection('students').doc(userId);
+       vendorRef.update({photoURL}).then( () => {        
+       }).catch( (err) => {
+         console.log(err)
+       })
+     }
+   
+
 }

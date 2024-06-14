@@ -294,7 +294,7 @@
             </mat-form-field>
             <br>
             <mat-form-field  id="parentesco"  appearance="fill" style="width: 400px; ">
-              <mat-label>Titular </mat-label>
+              <mat-label>Anexo 1 </mat-label>
               <input matInput formControlName="parentesco" id="parentesco" />
             </mat-form-field> 
     
@@ -305,7 +305,7 @@
             
             <br>
             <mat-form-field  id="parentesco2"  appearance="fill" style="width: 400px; ">
-              <mat-label>Titular</mat-label>
+              <mat-label>Anexo 2</mat-label>
               <input matInput formControlName="parentesco2" id="parentesco2" />
             </mat-form-field> 
     
@@ -315,7 +315,7 @@
             </mat-form-field>
     
             <br>
-            <mat-form-field  id="parentesco3"  appearance="fill" style="width: 400px; ">
+        <!--     <mat-form-field  id="parentesco3"  appearance="fill" style="width: 400px; ">
               <mat-label>Titular </mat-label>
               <input matInput formControlName="parentesco3" id="parentesco3" />
             </mat-form-field> 
@@ -323,7 +323,7 @@
             <mat-form-field  id="phone3"  appearance="fill" style="width: 400px;">
               <mat-label>Teléfono 3</mat-label>
               <input matInput formControlName="phone3" id="phone3" />
-            </mat-form-field>
+            </ma t-form-field>-->
             <br>
               <mat-label>Dirección</mat-label>
               <br>
@@ -357,34 +357,98 @@
                   <input matInput formControlName="municipio" id="municipio" />
                 </mat-form-field>
                 <br>
+                <mat-tab-group>
+                  <mat-tab label="Tutor"> 
+                  <div id="download1" style="border: 1px solid black;">
+                    <mat-card class="example-card-face1" style="width: 400px; height: 230px; border-radius: 1px; margin-left: 100px; margin-top: 20px;">
+                      <mat-card-header>
+                        <mat-card-title-group>
+                          <mat-card-title>{{clientName}}</mat-card-title>
+                          <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                          <img [src]="imageUrl" (error)="onImageError($event)"  style="width: 120px; height: 120px;" />   
+                        </mat-card-title-group>
+                      </mat-card-header>
+                      <mat-card-content>
+                        Con esta credencial se podrá recoger al alumno.
+                      </mat-card-content>
+                    </mat-card>
+                    <br>
+                    <mat-card class="example-card-face1" style="width: 400px; height: 230px; border-radius: 1px; margin-left: 100px; margin-top: 20px;">
+                      <mat-card-header>
+                        <mat-card-title-group>
+                          <mat-card-title>Derechos Reservados.</mat-card-title>
+                          <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                          <nz-qrcode [nzPadding]="[12, 24]" nzValue=" {{uidUsuario}}"></nz-qrcode>   
+                        </mat-card-title-group>
+                      </mat-card-header>
+                      <mat-card-content>
+                        Con esta credencial se podrá recoger al alumno.
+                      </mat-card-content>
+                    </mat-card>                
+                  </div>
+                  <button nz-button nzType="primary" (click)="downloadImg()">Download</button> 
+                </mat-tab>
+                  <mat-tab label="Anexo 1"> 
+                     <div id="download" style="border: 1px;">
+                    <mat-card class="example-card">             
+                      <mat-card-header>
+                        <mat-card-title-group>
+                          <mat-card-title>{{clientName}}</mat-card-title>
+                          <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                          <img [src]="imageUrl" (error)="onImageError($event)"  style="width: 100px; height: 100px;" />   
+                        </mat-card-title-group>
+                      </mat-card-header>
+                      <mat-card-content>
+                        {{displayName}}
+                      </mat-card-content>
+                    </mat-card>
+                    <mat-card class="example-card">
+                      <mat-card-header>
+                        <mat-card-title-group>
+                          <mat-card-title>Derechos Reservados.</mat-card-title>
+                          <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                          <nz-qrcode [nzPadding]="[12, 24]" nzValue=" {{uidUsuario}}"></nz-qrcode>   
+                        </mat-card-title-group>
+                      </mat-card-header>
+                      <mat-card-content>
+                        Informacion del Alumno.
+                      </mat-card-content>
+                    </mat-card>                
+                  </div>
+                  <button nz-button nzType="primary" (click)="downloadImg()">Download</button> 
+                 </mat-tab>
+                  <mat-tab label="Anexo 2"> 
+                    <div id="download" style="border: 1px;">
+                      <mat-card class="example-card">             
+                        <mat-card-header>
+                          <mat-card-title-group>
+                            <mat-card-title>{{clientName}}</mat-card-title>
+                            <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                            <img [src]="imageUrl" (error)="onImageError($event)"  style="width: 100px; height: 100px;" />   
+                          </mat-card-title-group>
+                        </mat-card-header>
+                        <mat-card-content>
+                          {{displayName}}
+                        </mat-card-content>
+                      </mat-card>
+                      <mat-card class="example-card">
+                        <mat-card-header>
+                          <mat-card-title-group>
+                            <mat-card-title>Derechos Reservados.</mat-card-title>
+                            <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
+                            <nz-qrcode [nzPadding]="[12, 24]" nzValue=" {{uidUsuario}}"></nz-qrcode>   
+                          </mat-card-title-group>
+                        </mat-card-header>
+                        <mat-card-content>
+                          Informacion del Alumno.
+                        </mat-card-content>
+                      </mat-card>                
+                    </div>
+                    <button nz-button nzType="primary" (click)="downloadImg()">Download</button> 
+                  </mat-tab>                  
+              </mat-tab-group>
               <!-- Add styles to each form field as needed -->
-              <div id="download" style="border: 1px;">
-                <mat-card class="example-card">             
-                  <mat-card-header>
-                    <mat-card-title-group>
-                      <mat-card-title>{{clientName}}</mat-card-title>
-                      <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
-                      <img [src]="imageUrl" (error)="onImageError($event)"  style="width: 100px; height: 100px;" />   
-                    </mat-card-title-group>
-                  </mat-card-header>
-                  <mat-card-content>
-                    {{displayName}}
-                  </mat-card-content>
-                </mat-card>
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    <mat-card-title-group>
-                      <mat-card-title>Derechos Reservados.</mat-card-title>
-                      <mat-card-subtitle>Tutor: {{displayName}}</mat-card-subtitle>
-                      <nz-qrcode [nzPadding]="[12, 24]" nzValue=" {{uidUsuario}}"></nz-qrcode>   
-                    </mat-card-title-group>
-                  </mat-card-header>
-                  <mat-card-content>
-                    Informacion del Alumno.
-                  </mat-card-content>
-                </mat-card>                
-              </div>
-              <button nz-button nzType="primary" (click)="downloadImg()">Download</button> 
+             
               <button mat-button color="primary" type="submit">Guardar</button>
               <button mat-button color="primary" type="submit" (click)="closeVerUsuario()">Cerrar</button>
             </div>

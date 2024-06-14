@@ -116,8 +116,11 @@
                   <mat-icon>...</mat-icon>
                 </button>
                 <mat-menu #chatSetting1="matMenu">
-                  <button mat-menu-item (click)="verAlumno(element.uid)">Ver Alumno</button>
-                  <button mat-menu-item (click)="borrarAlumno(element.uid)">Borrar Alumno</button>
+                  <button mat-menu-item (click)="verAlumno(element)">Ver</button>
+                  <button mat-menu-item (click)="VerPagosAlumno(element)">Pagos</button>
+                  <button mat-menu-item (click)="VerAsistencias(element)">Asistencias</button>
+                  <button mat-menu-item (click)="VerNotificaciones(element)">Notificaciones</button>
+                  <button mat-menu-item (click)="borrarAlumno(element.uid)">Borrar</button>
                 </mat-menu>
               </td>
             </ng-container>
@@ -186,3 +189,4 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+

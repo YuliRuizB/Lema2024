@@ -57,6 +57,10 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import {MatCardModule} from '@angular/material/card';
 import { NzQRCodeModule } from 'ng-zorro-antd/qr-code';
 import { ConsolaComponent } from './consola/consola.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { AlumnosDetalleComponent } from './alumnos/alumnos-detalle/alumnos-detalle.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -80,9 +84,13 @@ import { ConsolaComponent } from './consola/consola.component';
     PleaseVerifyEmailComponent,
     CommonLayoutComponent,
     VerifyEmailComponent,
-    ConsolaComponent
+    ConsolaComponent,
+    AlumnosDetalleComponent 
   ],
   imports: [
+    MatSlideToggleModule,
+    NzModalModule,
+    MatExpansionModule,
     NzQRCodeModule,
     MatCardModule,
     BrowserModule,

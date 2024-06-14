@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { UsersService } from '../shared/services/usuarios.service';
@@ -11,6 +11,9 @@ import { UsersService } from '../shared/services/usuarios.service';
 export class ConsolaComponent {
   user: any;
   client:any[] =[];
+  salones: salonesTable[] = [];
+  readonly panelOpenState = signal(false);
+
   constructor(private router: Router, 
     public authService: AuthenticationService,
     private usersService: UsersService) { 
@@ -20,7 +23,10 @@ export class ConsolaComponent {
         if(this.user != null){
         
           this.usersService.getClientInfo(this.user.claveCliente).subscribe((data1: any[]) => {           
-            this.client = data1;              
+            this.client = data1; 
+            this.usersService.getGradebyCustomer(this.user.claveCliente).subscribe((data: any) => {        
+              this.salones = data;          
+            });           
         });   
         }                
     });
@@ -42,4 +48,14 @@ export class ConsolaComponent {
 
 
 
+}
+
+
+export interface salonesTable {
+  active: string;
+  description: string;
+  claveGrado: string;
+  claveCliente:string;
+  name:string;
+  studentsTotal:string; 
 }

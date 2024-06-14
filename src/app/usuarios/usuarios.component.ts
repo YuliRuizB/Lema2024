@@ -336,9 +336,8 @@ logout() {
 
 
   downloadImg(): void {
-    const element = document.getElementById('download');
+    const element = document.getElementById('download1');
     if (element) {
-      // Wait for all images to load
       const images = element.getElementsByTagName('img');
       const loadPromises = Array.from(images).map(img => {
         if (!img.complete) {
@@ -349,10 +348,23 @@ logout() {
         }
         return Promise.resolve();
       });
-
+  
       Promise.all(loadPromises).then(() => {
-        // All images are loaded, now capture the screenshot
-        html2canvas(element).then((canvas) => {
+        html2canvas(element, {
+          useCORS: true, // Ensures cross-origin images are loaded properly
+          onclone: (clonedDoc) => {
+            // Apply inline styles if needed
+            const clonedElement = clonedDoc.getElementById('download1');
+            if (clonedElement) {
+              clonedElement.style.border = '1px solid black';
+              clonedElement.style.width = '600px';
+              clonedElement.style.height = '530px';
+              clonedElement.style.borderRadius = '1px';
+             // clonedElement.style.marginLeft = '100px';
+             // clonedElement.style.marginTop = '20px';
+            }
+          }
+        }).then((canvas) => {
           const link = document.createElement('a');
           link.href = canvas.toDataURL('image/png');
           link.download = 'download.png';
@@ -364,9 +376,9 @@ logout() {
         console.error('Error loading images:', error);
       });
     } else {
-      console.error('Element with id "download" not found.');
+      console.error('Element with id "download1" not found.');
     }
-  }
+}
 }
 export interface usuariosTable {
   clave: string;

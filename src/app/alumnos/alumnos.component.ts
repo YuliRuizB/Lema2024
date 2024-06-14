@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { usuariosTable } from '../usuarios/usuarios.component';
+import { AlumnosDetalleComponent } from './alumnos-detalle/alumnos-detalle.component';
 
 @Component({
   selector: 'app-alumnos',
@@ -17,6 +18,7 @@ import { usuariosTable } from '../usuarios/usuarios.component';
   styleUrls: ['./alumnos.component.scss']
 })
 export class AlumnosComponent implements OnInit {
+  readonly dialog = inject(MatDialog);
   user: any;
   client: any[] = [];
   displayedColumns: string[] = ['claveAlumno', 'nombre', 'apellidoPaterno', 'apellidoMaterno', 'claveGrado', 'uid'];
@@ -26,14 +28,14 @@ export class AlumnosComponent implements OnInit {
   grados: any[] = [];
   fileValue: any;
   imageUrl: any;
+  verAlumnosClicked:boolean= false;
   dataSource1 = new MatTableDataSource<AlumnosTable>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private router: Router,
+  constructor(private router: Router,  
     public authService: AuthenticationService,
     private snackBar: MatSnackBar,
-    private storage: AngularFireStorage,
-    private dialog: MatDialog,
+    private storage: AngularFireStorage,   
     private fb: FormBuilder,
     private usersService: UsersService) {
 
@@ -70,8 +72,9 @@ export class AlumnosComponent implements OnInit {
       claveCliente: [''],
       claveGrado:[''],
       photoURL:[''],
-      userId:['']
-       
+      userId:[''],
+      active:[''],
+      informacionMedica:['']
     });
 
   }
@@ -103,24 +106,46 @@ export class AlumnosComponent implements OnInit {
     console.log("borrar usuario id" + id);
   }
 
-  verAlumno(uid: any) {
-    console.log("ver alumnos id" + uid);
-    /* this.verAlumnosClicked = true;
-    this.verUsuarioClicked = false; 
-    
-    this.usersService.getAlumnoInfo(uid).subscribe((data: any) => {       
-      console.log(data); 
-      this.Element_Data_Alumnos = data;
-   });     */
+  VerAsistencias(id: any) {
+    console.log("VerAsistencias alumno id" + id);
+  }
+
+  VerNotificaciones(id: any) {
+    console.log("VerNotificaciones alumno id" + id);
+  }
+  VerPagosAlumno(id: any) {
+    console.log("verpagos alumno id" + id);
+  }
+
+  verAlumno(data: any) {   
+console.log(data);
+      const dialogRef = this.dialog.open(AlumnosDetalleComponent, {
+        width: '1000px',
+        height: '600px',
+        data: data 
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+  }
+
+  handleCancel(){
+    console.log("cancel");
+    this.verAlumnosClicked = false;   
   }
 
   ngOnInit(): void {
-
-
   }
+
   logout() {
     this.authService.signOut();
   }
+
+  guardarEditarAlumno(){
+    console.log("guardarEditarAlumno"); 
+  }
+ 
 
   ngAfterViewInit(): void {
     this.dataSource1.paginator = this.paginator;
