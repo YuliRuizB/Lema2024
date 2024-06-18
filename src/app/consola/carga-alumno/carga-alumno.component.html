@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>{{dataInicial}} de Alumnado </h2>
+<mat-dialog-content class="mat-typography">
+    <form class="example-form">
+        <mat-form-field class="example-full-width" style="margin-left: 250px;">
+          <mat-label>Ingresa el QR</mat-label>
+          <input matInput placeholder="QR" (keyup.enter)="onEnter(input.value)" #input>
+        </mat-form-field>   
+      </form>
+      
+      <div *ngIf="cardValue">
+      <mat-card class="alumno-card"  style="margin-left: 250px; height: 110px;">      
+        <mat-card-header>
+          <div mat-card-avatar [style.background-image]="'url(' + photoURL + ')'" class="avatar"></div>
+          <mat-card-title>{{ nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ AP }} {{ AM }}</mat-card-subtitle>
+          <mat-card-subtitle>   {{ Parentesco }} </mat-card-subtitle>
+        </mat-card-header>             
+      </mat-card>
+        </div>
+      <div *ngFor="let alumno of alumnosData">
+      <mat-card class="alumno-card">
+        <mat-card-header >
+          <div mat-card-avatar [style.background-image]="'url(' + alumno.photoURL + ')'" class="avatar"></div>
+          <mat-card-title>{{ alumno.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ alumno.apellidoPaterno }} {{ alumno.apellidoMaterno }}</mat-card-subtitle>
+        </mat-card-header>       
+        <mat-card-actions>
+          <button mat-stroked-button color="primary" (click)="IngresaAlumno(alumno)">Ingresar</button>
+          <button mat-stroked-button color="primary" (click)="SalidaAlumno(alumno)" >Salida</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>
+  
