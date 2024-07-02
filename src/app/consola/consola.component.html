@@ -21,9 +21,12 @@
             <span>Administración</span>
           </button>
           <mat-menu #adminMenu="matMenu">
+            <button mat-menu-item (click)="redirectTo('consola')">Consola</button>
             <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
+            <button mat-menu-item (click)="redirectTo('cobranza')">Cobranza</button>
             <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
             <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
+            <button mat-menu-item (click)="redirectTo('nutricion')">Nutrición</button>
             <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
           </mat-menu>
           <button  mat-raised-button [matMenuTriggerFor]="notificacionesMenu" aria-label="Menú Notificaciones"   class="small-button">
@@ -63,10 +66,11 @@
   </mat-toolbar>
   <div class="content main-content" role="main">
     <mat-tab-group >
-        <mat-tab label="Inicio">
+        <mat-tab [label]="'Inicio ' + getFechaActualFormateada()">
           <div  style="margin-top: 15px; margin-left: 15px;"> 
             <div class="example-button-row">
-              <button mat-raised-button>Ingreso</button>           
+              <button mat-raised-button (click)="cargaAlumno()">Ingreso</button>           
+              <button mat-raised-button (click)="cargaAlumnoSalida()">Salida</button>           
             </div>
           </div>
           <div  style="margin-top: 15px;">
@@ -79,7 +83,25 @@
                    Cantidad de Alumnos Activos ( {{ salon.studentsTotal }})
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <p>I'm visible because I am open</p>
+                <div *ngIf="salon.consolaTable && salon.consolaTable.records.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nombre del Estudiante</th>
+                        <th>Hora de Inicio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let record of salon.consolaTable.records">
+                        <td>{{ record.studentName }}</td>
+                        <td>{{ formatTime(record.initialTime) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(salon.consolaTable && salon.consolaTable.records.length > 0)">
+                  <p>No hay alumnos ingresados en este salón</p>
+                </div>
               </mat-expansion-panel>
             </mat-accordion>
           </ng-container>
@@ -88,7 +110,5 @@
           </ng-container>
         </div>
         </mat-tab>
-        <mat-tab label="Salidas"> </mat-tab>
-        
     </mat-tab-group>
   </div>

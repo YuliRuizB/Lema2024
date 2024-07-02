@@ -85,6 +85,7 @@ export class UsuariosComponent implements AfterViewInit {
   this.userFormEdit = this.fb.group({
     claveCliente: ['', Validators.required],
     name: ['', Validators.required],
+    active: [],
     apellidoPaterno: ['', Validators.required],
     apellidoMaterno: ['', Validators.required],
     fechaNacimiento: ['', Validators.required],  
@@ -111,6 +112,7 @@ export class UsuariosComponent implements AfterViewInit {
   });
     this.userForm = this.fb.group({
       claveCliente: ['', Validators.required],
+      active: [],
       name: ['', Validators.required],
       apellidoPaterno: ['', Validators.required],
       apellidoMaterno: ['', Validators.required],
@@ -175,6 +177,7 @@ export class UsuariosComponent implements AfterViewInit {
       this.userFormEdit.patchValue({
         claveCliente: data[0]["claveCliente"],
         name:data[0]["name"],
+        active: data[0]["active"],
         apellidoPaterno: data[0]["apellidoPaterno"],
         apellidoMaterno: data[0]["apellidoMaterno"],
         fechaNacimiento: data[0]["fechaNacimiento"],
@@ -225,7 +228,9 @@ export class UsuariosComponent implements AfterViewInit {
   }
 
   borrarUsuario(id:any){    
-    console.log("borrar usuario id" +id);
+    this.usersService.deleteUserInfoByID(id);   
+    this.notifyUser("Listo! el usuario a sido eliminado.", "info");
+
   }
 
   pagosUsuario(id:any){    
@@ -258,6 +263,7 @@ logout() {
   submitForm() {
     // Puedes manejar la lógica de envío del formulario aquí
     this.userForm.controls['claveCliente'].setValue(this.user.claveCliente);
+    this.userForm.controls['active'].setValue(true);
     console.log(this.userForm.value);
   
     if (this.userForm.valid){

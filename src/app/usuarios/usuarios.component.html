@@ -22,8 +22,10 @@
         <mat-menu #adminMenu="matMenu">
           <button mat-menu-item (click)="redirectTo('consola')">Consola</button>
           <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
+          <button mat-menu-item (click)="redirectTo('cobranza')">Cobranza</button>
           <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
           <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
+          <button mat-menu-item (click)="redirectTo('nutricion')">Nutrición</button>
           <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
         </mat-menu>
         <button  mat-raised-button [matMenuTriggerFor]="notificacionesMenu" aria-label="Menú Notificaciones"   class="small-button">
@@ -105,9 +107,9 @@
                   </button>
                   <mat-menu #chatSetting="matMenu">
                     <button mat-menu-item (click)="verUsuario(element.uid)">Ver Usuario</button>
-                    <button mat-menu-item (click)="verAlumnos(element.id)">Alumnos</button>
-                    <button mat-menu-item (click)="borrarUsuario(element.uid)">Borrar Usuario</button>
+                    <button mat-menu-item (click)="verAlumnos(element.id)">Alumnos</button>                   
                     <button mat-menu-item (click)="pagosUsuario(element.uid)">Pagos</button>
+                    <button mat-menu-item (click)="borrarUsuario(element.uid)">Borrar Usuario</button>
                   </mat-menu>
                 </td>
               </ng-container>

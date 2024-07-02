@@ -12,7 +12,7 @@
         <button mat-raised-button [matMenuTriggerFor]="alumnosMenu" aria-label="Menú Alumnos"  class="small-button">
           <span>Alumnos</span>
         </button>
-        <mat-menu #alumnosMenu="matMenu" yPosition="above">
+        <mat-menu #alumnosMenu="matMenu" yPosition="above">         
           <button mat-menu-item (click)="redirectTo('usuarios')">Padres de Familia</button>
           <button mat-menu-item (click)="redirectTo('alumnos')">Alumnos</button>
           <button mat-menu-item (click)="redirectTo('reportes-alumnos')">Reportes</button>
@@ -23,8 +23,10 @@
         <mat-menu #adminMenu="matMenu">
           <button mat-menu-item (click)="redirectTo('consola')">Consola</button>
           <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
+          <button mat-menu-item (click)="redirectTo('cobranza')">Cobranza</button>
           <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
           <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
+          <button mat-menu-item (click)="redirectTo('nutricion')">Nutrición</button>
           <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
         </mat-menu>
         <button  mat-raised-button [matMenuTriggerFor]="notificacionesMenu" aria-label="Menú Notificaciones"   class="small-button">

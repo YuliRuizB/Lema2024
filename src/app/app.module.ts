@@ -28,7 +28,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { PleaseVerifyEmailComponent } from './auth/please-verify-email/please-verify-email.component';
 import { CommonLayoutComponent } from './menu/common-layout/common-layout.component';
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -61,6 +61,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AlumnosDetalleComponent } from './alumnos/alumnos-detalle/alumnos-detalle.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CobranzaPageComponent } from './cobranza/cobranza-page/cobranza-page.component';
+import { NutricionPageComponent } from './nutricion/nutricion-page/nutricion-page.component';
+import { CargaAlumnoComponent } from './consola/carga-alumno/carga-alumno.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CommonLayoutComponent,
     VerifyEmailComponent,
     ConsolaComponent,
-    AlumnosDetalleComponent 
+    AlumnosDetalleComponent,
+    CobranzaPageComponent,
+    NutricionPageComponent,
+    CargaAlumnoComponent 
   ],
   imports: [
     MatSlideToggleModule,
@@ -131,6 +137,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NzResultModule
   ],
   providers: [
+    DatePipe,
     provideClientHydration(),
     provideAnimationsAsync()
   ],

@@ -14,6 +14,8 @@ import { SalonesComponent } from './salones/salones.component';
 import { MaestrosComponent } from './maestros/maestros.component';
 import { ReportesSalonesComponent } from './reportes-salones/reportes-salones.component';
 import { ConsolaComponent } from './consola/consola.component';
+import { CobranzaPageComponent } from './cobranza/cobranza-page/cobranza-page.component';
+import { NutricionPageComponent } from './nutricion/nutricion-page/nutricion-page.component';
 const routes: Routes = [
 	{
     path: '',
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'home', component: MenuComponent },
   { path: 'alumnos', component: AlumnosComponent },
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'cobranza', component: CobranzaPageComponent }, 
+  { path: 'nutricion', component: NutricionPageComponent },  
   { path: 'reportes-alumnos', component: ReportesAlumnosComponent },
   { path: 'pagos', component: PagosComponent },
   { path: 'consola', component: ConsolaComponent },

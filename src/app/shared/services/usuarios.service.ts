@@ -238,6 +238,85 @@ import { MatSnackBar } from '@angular/material/snack-bar';
          console.log(err)
        })
      }
+
+     getAlumnosConsole(claveCliente:string , uidUser:string){    
+      return this.afs.collection('students', (ref:any) => 
+      ref
+      .where('claveCliente', '==', claveCliente)  
+      .where('userId', '==', uidUser)  
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+
+    createControlPanel(newControlUpdate: any) {
+      const newId = this.afs.createId();
+      newControlUpdate.uid = newId;   
+      const student = this.afs.collection('controlPanel').doc(newId);
+      return student.set(newControlUpdate).then(() => {
+        return newId;
+      });
+    }
+
+    getConsolaPanelInfo(currentDate:any, claveGrado:string, claveCliente:string) {     
+      return this.afs.collection('controlPanel', (ref:any) => 
+        ref
+        .where('claveCliente', '==', claveCliente)  
+        .where('claveGrado', '==', claveGrado)
+        .where('active', '==', true)
+        .where('date', '==', currentDate)  
+        ).snapshotChanges().pipe(
+          map((actions:any) => actions.map((a:any) => {
+            const id = a.payload.doc.id;
+            const data = a.payload.doc.data() as any;
+            return { id, ...data }
+          }))
+        )
+    }
    
+    getConsolaPanelInfoByStudent(currentDate:any, claveGrado:string, claveCliente:string, alumnoId:string) {     
+      return this.afs.collection('controlPanel', (ref:any) => 
+        ref
+        .where('claveCliente', '==', claveCliente)  
+        .where('claveGrado', '==', claveGrado)
+        .where('active', '==', true)
+        .where('alumnoId', '==', alumnoId)        
+        .where('date', '==', currentDate)  
+        ).snapshotChanges().pipe(
+          map((actions:any) => actions.map((a:any) => {
+            const id = a.payload.doc.id;
+            const data = a.payload.doc.data() as any;
+            return { id, ...data }
+          }))
+        )
+    }    
+   
+    OutControlPanel(currentDate:any, alumnoId: string, claveCliente:string) {
+      // this.message.loading('Actualizando ...');
+      console.log(alumnoId); 
+      console.log(currentDate); 
+      console.log(claveCliente);      
+      const vendorRef = this.afs.collection('controlPanel', ref => 
+        ref.where('date', '==', currentDate)
+          .where('uid', '==', alumnoId)
+          .where('claveCliente', '==', claveCliente)
+      );
+      vendorRef.get().subscribe(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // Actualizar el documento con la nueva photoURL
+          const docRef = this.afs.collection('controlPanel').doc(doc.id);
+          docRef.update({ active : false,
+            endTime: new Date().toISOString()      
+           }).then(() => {          
+          }).catch((err) => {
+            console.error('Error al actualizar documento:', err);
+          });
+        });
+      });    
+  }
 
 }

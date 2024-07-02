@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Creación de Maestro </h2>
+<mat-dialog-content class="mat-typography">
+    <mat-dialog-content class="mat-typography">      
+
+        <form [formGroup]="formG" (ngSubmit)="onSubmit()">        
+            <label for="fileInput" style="cursor: pointer;">         
+                Carga Imagen       
+                <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
+                 <button mat-icon-button (click)="fileInput.click()">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                <img *ngIf="photoUrlS" mat-card-lg-image [src]="photoUrlS" style="width: 100px; height: 100px; border-radius: 50%;">
+              </label>
+              <br>
+            <mat-form-field class="example-full-width">
+              <mat-label>Clave Grado</mat-label>
+              <input matInput formControlName="claveGrado" >            
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="name" >           
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Apellido Paterno</mat-label>
+              <input matInput formControlName="apellidoPaterno" >            
+            </mat-form-field>
+                 
+            <mat-form-field class="example-full-width">
+              <mat-label>Apellido Materno</mat-label>
+              <input matInput formControlName="apellidoMaterno" >            
+            </mat-form-field>
+        </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>
+  
