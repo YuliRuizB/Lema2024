@@ -1,0 +1,17 @@
+{
+  "routes": [
+    "/alumnos",
+    "/home",
+    "/login",
+    "/maestros",
+    "/notificaciones",
+    "/pagos",
+    "/productos",
+    "/promociones",
+    "/reportes-administracion",
+    "/reportes-alumnos",
+    "/reportes-salones",
+    "/salones",
+    "/usuarios"
+  ]
+}
