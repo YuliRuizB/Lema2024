@@ -21,13 +21,20 @@
     margin-top: 15px;
   }
 
-  .logo {
-    width: 100px; /* Ajusta el tamaño según tus necesidades */
-    height: 100px; /* Ajusta el tamaño según tus necesidades */
-    margin-bottom: 20px; /* Espacio entre el logo y el título */
+
+    .logo {
+      width: 150px; /* Ajusta el tamaño según sea necesario */
+      height: 150px; /* Asegúrate de que la altura y el ancho sean iguales */
+      border-radius: 50%; /* Esto hace que la imagen sea redonda */
+      object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor */
+      margin-left: 110px; /* Mantiene tu margen existente */
   }
 
   h2 {
     margin-bottom: 20px; /* Espacio entre el título y el formulario */
+  }
+
+  .center-init {
+    margin-left: 120px;
   }
   

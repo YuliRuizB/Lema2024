@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { UsersService } from '../shared/services/usuarios.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { CargaMaestroComponent } from './carga-maestro/carga-maestro.component';
 
 @Component({
   selector: 'app-maestros',
@@ -15,8 +17,9 @@ export class MaestrosComponent implements OnInit {
   displayedColumns: string[] = ['clave', 'grado', 'name', 'apellidoPaterno', 'apellidoMaterno'];
   ELEMENT_DATA: teacherTable[] = [];
   dataSource = new MatTableDataSource<teacherTable>(this.ELEMENT_DATA);
-
-
+  readonly dialog = inject(MatDialog);
+  readonly panelOpenState = signal(false);
+  
   constructor(private router: Router, 
     public authService: AuthenticationService,
     private usersService: UsersService) { 
@@ -67,7 +70,22 @@ export class MaestrosComponent implements OnInit {
   redirectTo(place:string){
     this.router.navigate([`/${place}`]);
   }
+
+  addTeacher(){
+    const dialogRef = this.dialog.open(CargaMaestroComponent, {
+      width: '800px',
+      height: '600px',
+      data: "Ingreso" 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
+
+
 
 export interface teacherTable {
   active: string;

@@ -72,13 +72,14 @@
              
                 <div style="margin-left: 70px;" class="search-container">
                   <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Salón">
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Nombre">
                   </mat-form-field>
                   <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
+                  <button mat-raised-button style="margin-left: 50px;" (click)="addTeacher()">Agregar</button>
                 </div>
               </div>
               
-            <table mat-table [dataSource]="ELEMENT_DATA">
+            <table mat-table [dataSource]="dataSource">
           
               <!-- Position Column -->
               <ng-container matColumnDef="clave">
@@ -128,6 +129,5 @@
             </mat-paginator>
           </div>
            </mat-tab>
-        <mat-tab label="Crear Maestro">  </mat-tab>
     </mat-tab-group>
     </div>

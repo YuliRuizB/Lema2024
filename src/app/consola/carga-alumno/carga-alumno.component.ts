@@ -13,6 +13,7 @@ import { lte } from 'lodash';
 export class CargaAlumnoComponent {
   userService = inject(UsersService);
   alumnosData: any = [];
+  alumnosDataR: any = [];
   user: any;
   infoData:any;
   nombre:any = "";
@@ -53,6 +54,10 @@ export class CargaAlumnoComponent {
     });
     this.userService.getAlumnosConsole(this.user.claveCliente,value2 ).subscribe((data: any) => {  
       if (this.dataInicial =="Ingreso"){
+        const now = new Date();
+        const dateString = now.toISOString().split('T')[0];
+        const records: any[] = [];        
+         console.log(data);
         this.alumnosData = data;
       } else {
         const now = new Date();
@@ -86,37 +91,44 @@ export class CargaAlumnoComponent {
       console.log(data);
       const now = new Date();
       const date = now.toISOString().split('T')[0]; // Obtiene solo la parte de la fecha
-
-      const dataAlumno: any = {
-      active: true,
-      claveCliente: data.claveCliente,
-      claveGrado: data.claveGrado,
-      userId: data.userId,
-      initialTime: new Date().toISOString(),
-      endTime: null,
-      currentDate:new Date(),
-      changeDate: null,
-      date: date,
-      alumnoId: data.uid,
-      nombre:  data.nombre,
-      apellidoPaterno: data.apellidoPaterno,
-      apellidoMaterno : data.apellidoMaterno,
-      photoURL: data.photoURL,
-      studentName: data.nombre  + ' ' + data.apellidoPaterno + ' ' + data.apellidoMaterno,
-      uid:''
-    }
-    console.log(dataAlumno);
-    this.userService.createControlPanel(dataAlumno).then((response: any) => {
-      //console.log(response);
-      this.notifyUser("Listo! Puede se ingreso al sistema.", "info");
-    
-    }).catch(err => {
-      console.log(err);
-    });
-  } else {
-    this.notifyUser("No se puede ingresar ya que se esta dando salida al alumno.", "error");
-  }
-
+      this.userService.getControlPanelInfo(data.claveCliente,data.uid,date).subscribe((dataR: any) => {   
+        console.log(dataR);                  
+        if (dataR != undefined && dataR.length > 0){
+          const dataAlumno: any = {
+            active: true,
+            claveCliente: data.claveCliente,
+            claveGrado: data.claveGrado,
+            userId: data.userId,
+            initialTime: new Date().toISOString(),
+            endTime: null,
+            currentDate:new Date(),
+            changeDate: null,
+            date: date,
+            alumnoId: data.uid,
+            nombre:  data.nombre,
+            apellidoPaterno: data.apellidoPaterno,
+            apellidoMaterno : data.apellidoMaterno,
+            photoURL: data.photoURL,
+            studentName: data.nombre  + ' ' + data.apellidoPaterno + ' ' + data.apellidoMaterno,
+            uid:''
+          }
+          console.log(dataAlumno);
+          this.userService.createControlPanel(dataAlumno).then((response: any) => {
+            //console.log(response);
+            this.notifyUser("Listo! Puede se ingreso al sistema.", "info");
+          }).catch(err => {
+            console.log(err);
+          }); 
+         
+        }  else {          
+          this.notifyUser("El alumno ya esta ingresado. Favor de Validar", "error");
+          return;          
+        }
+      });
+    }  
+    else {
+      this.notifyUser("No se puede ingresar ya que se esta dando salida al alumno.", "error");
+    } 
   }
 
   SalidaAlumno(data:any) {

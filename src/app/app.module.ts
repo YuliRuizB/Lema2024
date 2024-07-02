@@ -64,9 +64,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CobranzaPageComponent } from './cobranza/cobranza-page/cobranza-page.component';
 import { NutricionPageComponent } from './nutricion/nutricion-page/nutricion-page.component';
 import { CargaAlumnoComponent } from './consola/carga-alumno/carga-alumno.component';
+import { CargaSalonComponent } from './salones/carga-salon/carga-salon.component';
+import { CargaAlumnosComponent } from './salones/carga-alumnos/carga-alumnos.component';
+import { CargaMaestroComponent } from './maestros/carga-maestro/carga-maestro.component';
+import { CargaProductoComponent } from './productos/carga-producto/carga-producto.component';
+import { DateFormatPipe } from './shared/services/date-format.pipe';
+import { DateFormatPipeM } from './shared/services/date-format-M.pipe';
 
 @NgModule({
   declarations: [
+    DateFormatPipeM,
+    DateFormatPipe,
     AppComponent,
     HomeTestComponent,
     MenuComponent,
@@ -91,7 +99,11 @@ import { CargaAlumnoComponent } from './consola/carga-alumno/carga-alumno.compon
     AlumnosDetalleComponent,
     CobranzaPageComponent,
     NutricionPageComponent,
-    CargaAlumnoComponent 
+    CargaAlumnoComponent,
+    CargaSalonComponent,
+    CargaAlumnosComponent,
+    CargaMaestroComponent,
+    CargaProductoComponent 
   ],
   imports: [
     MatSlideToggleModule,

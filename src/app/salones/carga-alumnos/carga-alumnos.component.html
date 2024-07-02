@@ -1,0 +1,45 @@
+
+<h2 mat-dialog-title>Alumnos registrados en salón</h2>
+<mat-dialog-content class="mat-typography">
+    <table mat-table [dataSource]="dataInicial" class="mat-elevation-z8">
+
+        <!-- Photo URL Column -->
+        <ng-container matColumnDef="photoURL">
+            <th mat-header-cell *matHeaderCellDef> Foto </th>
+            <td mat-cell *matCellDef="let element">
+              <img mat-card-avatar src="{{element.photoURL}}" alt="Foto de {{element.nombre}}" class="avatar">
+            </td>
+          </ng-container>
+    
+        <!-- Clave Alumno Column -->
+        <ng-container matColumnDef="claveAlumno">
+          <th mat-header-cell *matHeaderCellDef> Clave Alumno </th>
+          <td mat-cell *matCellDef="let element"> {{element.claveAlumno}} </td>
+        </ng-container>
+    
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+    
+        <!-- Apellido Paterno Column -->
+        <ng-container matColumnDef="apellidoPaterno">
+          <th mat-header-cell *matHeaderCellDef> Apellido Paterno </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellidoPaterno}} </td>
+        </ng-container>
+    
+        <!-- Apellido Materno Column -->
+        <ng-container matColumnDef="apellidoMaterno">
+          <th mat-header-cell *matHeaderCellDef> Apellido Materno </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellidoMaterno}} </td>
+        </ng-container>    
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>

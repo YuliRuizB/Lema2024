@@ -67,11 +67,11 @@
   <div class="content main-content" role="main">
     <mat-tab-group >
         <mat-tab [label]="'Inicio ' + getFechaActualFormateada()">
-          <div  style="margin-top: 15px; margin-left: 15px;"> 
+          <div  style="margin-top: 15px; margin-left: 15px; width: 100%;"> 
             <div class="example-button-row">
-              <button mat-raised-button (click)="cargaAlumno()">Ingreso</button>           
-              <button mat-raised-button (click)="cargaAlumnoSalida()">Salida</button>           
-            </div>
+              <button mat-raised-button style="margin-left: 50px;" (click)="cargaAlumno()">Ingreso</button>           
+              <button mat-raised-button style="margin-left: 50px;" (click)="cargaAlumnoSalida()">Salida</button>           
+            </div>        
           </div>
           <div  style="margin-top: 15px;">
           <ng-container *ngIf="salones.length > 0" >

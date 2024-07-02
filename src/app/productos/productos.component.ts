@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { UsersService } from '../shared/services/usuarios.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { CargaProductoComponent } from './carga-producto/carga-producto.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-productos',
@@ -9,9 +13,16 @@ import { UsersService } from '../shared/services/usuarios.service';
   styleUrls: ['./productos.component.scss']
 })
 export class ProductosComponent implements OnInit {
+  readonly dialog = inject(MatDialog);
   user: any;
   client:any[] =[];
+  displayedColumns: string[] = ['name', 'amount','date_from','type','claveCliente'];
+  ELEMENT_DATA: productosTable[] = [];
+  dataSource = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly panelOpenStaproductosTablete = signal(false);
 
+  
   constructor(private router: Router, 
     public authService: AuthenticationService,
     private usersService: UsersService) { 
@@ -21,7 +32,11 @@ export class ProductosComponent implements OnInit {
         if(this.user != null){
         
           this.usersService.getClientInfo(this.user.claveCliente).subscribe((data1: any[]) => {           
-            this.client = data1;         
+            this.client = data1; 
+            this.usersService.getProductsbyCustomer(this.user.claveCliente).subscribe((data: any) => {        
+              this.ELEMENT_DATA = data;
+              this.dataSource = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
+            });        
         });   
         }                
     });
@@ -33,6 +48,14 @@ export class ProductosComponent implements OnInit {
   configuracion(){
     //this.router.navigate([`/${place}`]);
   }
+  clearFilter(): void {
+    this.dataSource.filter = '';
+  }
+
+  applyFilter(event: any) {
+    const filterValue = event.target.value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;    
+  }
 
 
   redirectTo(place:string){
@@ -42,4 +65,37 @@ export class ProductosComponent implements OnInit {
     this.authService.signOut();
   }
 
+  addProduct(){
+    const dialogRef = this.dialog.open(CargaProductoComponent, {
+      width: '600px',
+      height: '400px',
+      data: "salon" 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  verProducto(id:any){
+
+  }
+
+  borrarProducto(id: any) {
+
+  }
+
+
+}
+
+
+export interface productosTable {
+  active: string;
+  amount: number;
+  claveCliente:string;
+  name:string;
+  date_from:Date;
+  date_to:Date;
+  type:string;  
+  date_created:Date;
 }
