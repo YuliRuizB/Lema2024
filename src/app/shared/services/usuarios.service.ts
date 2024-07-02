@@ -30,7 +30,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     getUserInfo(claveCliente:string, limit?: number){    
       return this.afs.collection('users', (ref:any) => 
       ref
-      .where('claveCliente', '==', claveCliente)  
+      .where('claveCliente', '==', claveCliente) 
+      .where('active', '==', true)
       ).snapshotChanges().pipe(
         map((actions:any) => actions.map((a:any) => {
           const id = a.payload.doc.id;
@@ -122,6 +123,49 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         }))
       )
     }
+    getPaymentbyCustomer(claveCliente:string ){    
+      return this.afs.collectionGroup('payments', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      .where('active', '==', true)  
+      .orderBy('date_created', 'asc')
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+    getPaymentbyDatebyCustomer(claveCliente:string, startDate: Date, endDate: Date){
+      return this.afs.collectionGroup('payments', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      .where('active', '==', true)  
+      .where('date_created', '>=', startDate)
+      .where('date_created', '<=', endDate)
+      .orderBy('date_created', 'asc')
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+
+    getProductsbyCustomer(claveCliente:string ){    
+      return this.afs.collection('products', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
 
     getTeachersbyCustomer(claveCliente:string ){    
       return this.afs.collection('teachers', (ref:any) => 
@@ -165,6 +209,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         } else {
           console.error('Query snapshot is undefined.');
         }
+      }).catch((error:any) => {
+        console.error('Error updating user info:', error);
+      });
+    }
+
+    deleteUserInfoByID(uid: string) {
+      this.afs.collection('users', (ref:any) =>
+        ref
+          .where('uid', '==', uid)
+      ).get().toPromise().then((querySnapshot:any) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc:any) => {
+            // Update the 'photoUrl' field in the Firestore document
+            this.afs.collection('users').doc(doc.id).update({
+              active: false
+            });          
+          });
+        } 
       }).catch((error:any) => {
         console.error('Error updating user info:', error);
       });
@@ -224,6 +286,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         return newId;
       });
     }
+
+    createTeacher(newTeacher: any) {
+      const newId = this.afs.createId();
+      newTeacher.uid = newId;   
+      const student = this.afs.collection('students').doc(newId);
+      return student.set(newTeacher).then(() => {
+        return newId;
+      });
+    }
     updateStudent(studentId: string, student:any) {
       const studentRef = this.afs.collection('students').doc(studentId);
       return studentRef.update(student);
@@ -260,6 +331,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       return student.set(newControlUpdate).then(() => {
         return newId;
       });
+    }
+
+    getControlPanelInfo(claveCliente:string , alumnoId:string,currentDate:any,){    
+      return this.afs.collection('controlPanel', (ref:any) => 
+        ref
+        .where('claveCliente', '==', claveCliente)  
+        .where('uid', '==', alumnoId)
+        .where('active', '==', true)
+        .where('date', '==', currentDate)  
+        ).snapshotChanges().pipe(
+          map((actions:any) => actions.map((a:any) => {
+            const id = a.payload.doc.id;
+            const data = a.payload.doc.data() as any;
+            return { id, ...data }
+          }))
+        )
     }
 
     getConsolaPanelInfo(currentDate:any, claveGrado:string, claveCliente:string) {     
@@ -317,6 +404,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
           });
         });
       });    
-  }
+    }
+
+    createGrade(newGrade: any) {
+      const newId = this.afs.createId();
+      newGrade.uid = newId;   
+      const user = this.afs.collection('grades').doc(newId);
+      return user.set(newGrade).then(() => {
+        return newId;
+      });      
+    }
 
 }

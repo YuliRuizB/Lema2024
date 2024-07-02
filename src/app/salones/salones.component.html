@@ -60,13 +60,13 @@
 <mat-toolbar style="height: 80px;">
     <!-- Logo and Text in the Center -->
     <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-
       <span style="font-size: 24px;">Salones</span>
     </div>
 </mat-toolbar>
 <div class="content main-content" role="main">
 <mat-tab-group>
-    <mat-tab label="Salones">  <div class="mat-elevation-z8">
+    <mat-tab label="Salones"> 
+       <div class="mat-elevation-z8">
       <div class="centered-container">
        
           <div style="margin-left: 70px;" class="search-container">
@@ -74,10 +74,12 @@
               <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Salón">
             </mat-form-field>
             <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
+            <button mat-raised-button style="margin-left: 50px;" (click)="addGrade()">Agregar</button>
+         
           </div>
         </div>
         
-      <table mat-table [dataSource]="ELEMENT_DATA">
+      <table mat-table [dataSource]="dataSource">
     
         <!-- Position Column -->
         <ng-container matColumnDef="clave">
@@ -109,7 +111,7 @@
               <mat-icon>...</mat-icon>
             </button>
             <mat-menu #chatSetting="matMenu">            
-              <button mat-menu-item (click)="verAlumnos(element.id)">Alumnos</button>
+              <button mat-menu-item (click)="verAlumnos(element.claveGrado)">Alumnos</button>
               <button mat-menu-item (click)="borrarSalon(element.uid)">Borrar Salón</button>           
             </mat-menu>
           </td>
@@ -119,9 +121,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Selecciona una pagina">
       </mat-paginator>
-    </div> </mat-tab>
-    <mat-tab label="Crear/Editar Salones">  </mat-tab>
+    </div> 
+  </mat-tab>   
 </mat-tab-group>
 </div>

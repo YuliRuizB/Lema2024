@@ -1,6 +1,9 @@
 <div class="login-container">
-  <img src="assets/lemaLogo.png" alt="Logo" class="logo">
-  <h2>Iniciar Sesión</h2>
+  <img src="assets/lemaLogo.png" alt="Logo" class="logo" >
+  <div class="center-init">
+    <h2 >Iniciar Sesión</h2>
+  </div>
+ 
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <mat-form-field class="form-field">
       <input matInput placeholder="Correo Electrónico" name="username" [(ngModel)]="loginFormValue.username" required>

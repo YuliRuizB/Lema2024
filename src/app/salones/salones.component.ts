@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { UsersService } from '../shared/services/usuarios.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { CargaSalonComponent } from './carga-salon/carga-salon.component';
+import { CargaAlumnosComponent } from './carga-alumnos/carga-alumnos.component';
 
 @Component({
   selector: 'app-salones',
@@ -10,13 +14,16 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./salones.component.scss']
 })
 export class SalonesComponent implements OnInit {
+  readonly dialog = inject(MatDialog);
   user: any;
   client:any[] =[];
   displayedColumns: string[] = ['clave', 'grado', 'name', 'description', 'claveCliente'];
   ELEMENT_DATA: salonesTable[] = [];
   dataSource = new MatTableDataSource<salonesTable>(this.ELEMENT_DATA);
   verAlumnosClicked: boolean = false;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly panelOpenState = signal(false);
+  
   constructor(private router: Router, 
     public authService: AuthenticationService,
     private usersService: UsersService) { 
@@ -42,12 +49,23 @@ export class SalonesComponent implements OnInit {
     }
 
     verAlumnos(uid:any){  
-      console.log("ver students id" + uid);
+      console.log(uid);
       this.verAlumnosClicked = true;
      
       
       this.usersService.getStudentsByGrade(uid,this.user.claveCliente).subscribe((data: any) => {       
         console.log(data); 
+
+        const dialogRef = this.dialog.open(CargaAlumnosComponent, {
+          width: '800px',
+          height: '500px',
+          data: data
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });      
+
         //this.Element_Data_Alumnos = data;
      });    
     }
@@ -57,14 +75,8 @@ export class SalonesComponent implements OnInit {
     }
 
     applyFilter(event: any) {
-      const filterValue = event.target.value;
-      if (filterValue.length > 0){
-          this.dataSource.filter = filterValue.trim().toLowerCase();
-      } else {
-        console.log(filterValue);
-        console.log("filterValue");
-      }
-    
+      const filterValue = event.target.value.trim().toLowerCase();
+      this.dataSource.filter = filterValue;    
     }
 
     clearFilter(): void {
@@ -80,6 +92,22 @@ export class SalonesComponent implements OnInit {
   }
   logout() { 
     this.authService.signOut();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  addGrade(){
+    const dialogRef = this.dialog.open(CargaSalonComponent, {
+      width: '600px',
+      height: '400px',
+      data: "salon" 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
