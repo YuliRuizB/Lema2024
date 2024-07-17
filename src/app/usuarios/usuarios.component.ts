@@ -26,7 +26,7 @@ export class UsuariosComponent implements AfterViewInit {
   displayedColumns: string[] = ['clave', 'displayName', 'email', 'claveCliente'];
   displayedColumnsAlumnos: string[] = ['claveAlumno','nombre', 'apellidoPaterno', 'apellidoMaterno', 'claveGrado'];
   ELEMENT_DATA: usuariosTable[] = [];
-  Element_Data_Alumnos: alumnosTable[] = [];
+  Element_Data_Alumnos: alumnosTable[] = []; 
   dataSource = new MatTableDataSource<usuariosTable>(this.ELEMENT_DATA);
   dataSourceAlumnos = new MatTableDataSource<alumnosTable>(this.Element_Data_Alumnos);
   filterValue: string = '';

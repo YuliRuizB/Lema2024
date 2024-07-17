@@ -123,6 +123,34 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         }))
       )
     }
+    getNotifybyCustomer(claveCliente:string ){    
+      return this.afs.collection('notify', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+    
+
+
+    getGradebyCustomerID(claveCliente:string, claveGrado:string ){    
+      return this.afs.collection('grades', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      .where('claveGrado', '==', claveGrado)  
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
     getPaymentbyCustomer(claveCliente:string ){    
       return this.afs.collectionGroup('payments', (ref:any) => 
       ref    
@@ -166,6 +194,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         }))
       )
     }
+
+    getProductsbyIdbyCustomer(claveCliente:string, idProduct:any ){    
+      return this.afs.collection('products', (ref:any) => 
+      ref    
+      .where('claveCliente', '==', claveCliente)  
+      .where('uid', '==', idProduct)  
+      ).snapshotChanges().pipe(
+        map((actions:any) => actions.map((a:any) => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+
 
     getTeachersbyCustomer(claveCliente:string ){    
       return this.afs.collection('teachers', (ref:any) => 
@@ -295,6 +338,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         return newId;
       });
     }
+    createProduct(product: any) {
+      const newId = this.afs.createId();
+      product.uid = newId;   
+      const student = this.afs.collection('products').doc(newId);
+      return student.set(product).then(() => {
+        return newId;
+      });
+    }
+
+    createPayment(newPayment: any, studentid : any) {
+      const newId = this.afs.createId();
+      newPayment.uid = newId;  
+      const student = this.afs.collection("students").doc(studentid).collection('payments').doc(newId);     
+      return student.set(newPayment).then(() => {
+        return newId;
+      });
+    }
+
+    updateProduct(studentId: string, student:any) {
+      const studentRef = this.afs.collection('products').doc(studentId);
+      return studentRef.update(student);
+    }
+
     updateStudent(studentId: string, student:any) {
       const studentRef = this.afs.collection('students').doc(studentId);
       return studentRef.update(student);

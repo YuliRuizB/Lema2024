@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Ver Pago </h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formG" (ngSubmit)="onSubmit()">
+
+        <mat-form-field style="width: 450px;">
+            <mat-label>Grado</mat-label>
+            <input matInput formControlName="gradoName">
+          
+        </mat-form-field>   
+<br>
+        <mat-form-field style="width: 450px;">
+            <mat-label>Alumno</mat-label>          
+            <input matInput  formControlName="displayName">
+        </mat-form-field>
+<br>
+        <mat-form-field style="width: 450px;">
+            <mat-label>Elegir Producto o Servicio</mat-label>        
+            <input matInput  formControlName="productName">
+          </mat-form-field>
+  <br>
+  <mat-form-field style="width: 450px;">
+          <mat-label>Tipo de Pago</mat-label>
+          <mat-select formControlName="charge_type">
+            <mat-option value="Transeferencia">Transeferencia</mat-option>
+            <mat-option value="Efectivo">Efectivo</mat-option>
+            <mat-option value="App">App</mat-option>
+          </mat-select>
+        </mat-form-field>
+    <br>
+        <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+          <br>
+          <mat-label  *ngIf="photoUrlS">Comprobante</mat-label>
+          <a *ngIf="photoUrlS"[href]="photoUrlS" target="_blank">
+            Ver Comprobante
+        </a>
+    <br>
+        <mat-form-field>
+          <mat-label>Estatus de Pago</mat-label>       
+          <mat-select formControlName="status">
+            <mat-option value="confirmado">Confirmado</mat-option>
+            <mat-option value="revision">En Revision</mat-option>            
+          </mat-select>
+        </mat-form-field>
+    <br>
+      
+   
+       </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>

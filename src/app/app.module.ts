@@ -70,9 +70,15 @@ import { CargaMaestroComponent } from './maestros/carga-maestro/carga-maestro.co
 import { CargaProductoComponent } from './productos/carga-producto/carga-producto.component';
 import { DateFormatPipe } from './shared/services/date-format.pipe';
 import { DateFormatPipeM } from './shared/services/date-format-M.pipe';
+import { CargaPagoComponent } from './pagos/carga-pago/carga-pago.component';
+import { VerPagoComponent } from './pagos/ver-pago/ver-pago.component';
+import { VerNotificacionComponent } from './notificaciones/ver-notificacion/ver-notificacion.component';
+import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/nueva-notificacion.component';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle'; 
 
 @NgModule({
-  declarations: [
+  declarations: [    
     DateFormatPipeM,
     DateFormatPipe,
     AppComponent,
@@ -103,7 +109,11 @@ import { DateFormatPipeM } from './shared/services/date-format-M.pipe';
     CargaSalonComponent,
     CargaAlumnosComponent,
     CargaMaestroComponent,
-    CargaProductoComponent 
+    CargaProductoComponent,
+    CargaPagoComponent,
+    VerPagoComponent,
+    VerNotificacionComponent,
+    NuevaNotificacionComponent 
   ],
   imports: [
     MatSlideToggleModule,
@@ -146,7 +156,9 @@ import { DateFormatPipeM } from './shared/services/date-format-M.pipe';
     MatMenuModule,
     BrowserAnimationsModule,
     MatIconModule,
-    NzResultModule
+    NzResultModule,
+    MatListModule,
+    MatButtonToggleModule 
   ],
   providers: [
     DatePipe,

@@ -72,7 +72,7 @@
        
               <div style="margin-left: 70px;" class="search-container">
                 <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Salón">
+                  <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Producto">
                 </mat-form-field>
                 <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
                 <button mat-raised-button style="margin-left: 50px;" (click)="addProduct()">Agregar</button>
@@ -114,7 +114,7 @@
                     <mat-icon>...</mat-icon>
                   </button>
                   <mat-menu #chatSetting="matMenu">            
-                    <button mat-menu-item (click)="verProducto(element.claveGrado)">Ver Producto</button>
+                    <button mat-menu-item (click)="verProducto(element.uid)">Ver Producto</button>
                     <button mat-menu-item (click)="borrarProducto(element.uid)">Borrar Producto</button>           
                   </mat-menu>
                 </td>

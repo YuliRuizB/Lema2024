@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>Ingresar Pago </h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formG" (ngSubmit)="onSubmit()">
+
+        <mat-form-field style="width: 450px;">
+            <mat-label>Grado</mat-label>
+            <input matInput formControlName="claveGrado">
+            <mat-select (selectionChange)="onGradeSelected($event)" placeholder="Selecciona un Grado">
+                <mat-option *ngFor="let grade of grades" [value]="grade.claveGrado">{{ grade.name }}</mat-option>
+              </mat-select>  
+        </mat-form-field>   
+<br>
+        <mat-form-field style="width: 450px;">
+            <mat-label>Alumno</mat-label>          
+            <mat-select placeholder="Selecciona el Alumno"  (selectionChange)="onStudentSelected($event.value)">
+                <mat-option *ngFor="let student of students" [value]="student">{{ student.nombre }} {{ student.apellidoPaterno }} {{ student.apellidoMaterno }}</mat-option>
+            </mat-select>  
+        </mat-form-field>
+<br>
+        <mat-form-field style="width: 450px;">
+            <mat-label>Elegir Producto o Servicio</mat-label>        
+            <mat-select placeholder="Selecciona un Producto o servicio"   (selectionChange)="onProductSelected($event.value)">
+                <mat-option *ngFor="let prod of products" [value]="prod">{{ prod.name }} </mat-option>
+            </mat-select> 
+          </mat-form-field>
+  <br>
+  <mat-form-field style="width: 450px;">
+          <mat-label>Tipo de Pago</mat-label>
+          <mat-select formControlName="charge_type">
+            <mat-option value="Transeferencia">Transeferencia</mat-option>
+            <mat-option value="Efectivo">Efectivo</mat-option>
+            <mat-option value="App">App</mat-option>
+          </mat-select>
+        </mat-form-field>
+    <br>
+        <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+          <br>
+          <mat-label>Comprobante (opcional)</mat-label>
+          <label for="fileInput" style="cursor: pointer;">               
+            <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
+             <button mat-icon-button (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+            <img *ngIf="photoUrlS" mat-card-lg-image [src]="photoUrlS" style="width: 100px; height: 100px; border-radius: 50%;">
+          </label>
+    <br>
+        <mat-form-field>
+          <mat-label>Estatus de Pago</mat-label>       
+          <mat-select formControlName="status">
+            <mat-option value="confirmado">Confirmado</mat-option>
+            <mat-option value="revision">En Revision</mat-option>            
+          </mat-select>
+        </mat-form-field>
+    <br>
+      
+   
+       </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>
+  

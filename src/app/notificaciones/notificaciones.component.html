@@ -65,8 +65,241 @@
     </div>
 </mat-toolbar>
 <div class="content main-content" role="main">
-    <mat-tab-group>
-        <mat-tab label="Notificaciones Generales">  </mat-tab>
+
+    <mat-tab-group>    
+        <mat-tab label="Notificaciones Generales"> 
+          <div style="margin-bottom: 10px;margin-top: 10px;">
+            <button mat-raised-button (click)="addNewNotify()">Nueva notificación</button>
+        </div>
+        <div>
+          <ng-container>
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Pagos
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Cantidad ({{ nPagos }} )
+                   </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="notifyPayments && notifyPayments.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th>Repeticiones al Día</th>
+                        <th>Activo</th>
+                        <th>...</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    <!--   <tr *ngFor="let record of notifyPayments">
+                        <td>{{ record.studentName }}</td>
+                        <td>{{ formatTime(record.initialTime) }}</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(notifyPayments && notifyPayments.length > 0)">
+                  <p>No hay notificaciones programadas  para pagos</p>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Noticias
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Cantidad ({{ nNoticias }} )
+                   </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="notifyNews && notifyNews.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th>Repeticiones al Día</th>
+                        <th>Activo</th>
+                        <th>...</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    <!--   <tr *ngFor="let record of notifyNews">
+                        <td>{{ record.studentName }}</td>
+                        <td>{{ formatTime(record.initialTime) }}</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(notifyNews && notifyNews.length > 0)">
+                  <p>No hay notificaciones para Noticias</p>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Avisos
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Cantidad ({{ nAvisos }} )
+                   </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="notifyAvisos && notifyAvisos.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width: 40px;">Fecha</th>
+                        <th style="width: 210px;">Titulo</th>
+                        <th style="width: 600px;">Descripción</th>
+                        <th style="width: 100px;">Inicio</th>
+                        <th style="width: 100px;">Término</th>
+                        <th style="width: 100px;">Repeticiones al Día</th>
+                        <th style="width: 60px;">Activo</th>
+                        <th style="width: 20px;">...</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let record of notifyAvisos">                     
+                      <td style="width: 40px;">{{record.date_creation  | dateFormatM: 'month' }}</td>
+                      <td style="width: 210px;" >{{record.title}}</td>
+                      <td style="width: 600px;">{{record.description}}</td>
+                      <td style="width: 100px;">{{record.startDate | dateFormat}}</td>
+                      <td style="width: 100px;">{{record.expiredDate | dateFormat }}</td>
+                      <td style="width: 100px;">{{record.repeatAtDay}}</td>
+                      <td style="width: 60px;">{{record.active }}</td>
+                      <td style="width: 20px;">                       
+                        <button mat-icon-button [matMenuTriggerFor]="chatSetting">
+                          <mat-icon>...</mat-icon>
+                        </button>
+                        <mat-menu #chatSetting="matMenu">            
+                         <button mat-menu-item (click)="verNotify(record)">Ver Aviso</button>
+                         <button mat-menu-item (click)="borrarNotify(record.uid)">Borrar Aviso</button> 
+                        </mat-menu>                       
+                      </td>
+                    </tr>                
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(notifyAvisos && notifyAvisos.length > 0)">
+                  <p>No hay notificaciones para Avisos</p>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Logros
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Cantidad ({{ nLogros }} )
+                   </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="notifyLogros && notifyLogros.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th>Repeticiones al Día</th>
+                        <th>Activo</th>
+                        <th>...</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    <!--   <tr *ngFor="let record of notifyLogros">
+                        <td>{{ record.studentName }}</td>
+                        <td>{{ formatTime(record.initialTime) }}</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(notifyLogros && notifyLogros.length > 0)">
+                  <p>No hay notificaciones  para Logros</p>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Emergencias
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Cantidad ({{ nEmergencia }} )
+                   </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="notifyEmergency && notifyEmergency.length > 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th>Repeticiones al Día</th>
+                        <th>Activo</th>
+                        <th>...</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    <!--   <tr *ngFor="let record of notifyEmergency">
+                        <td>{{ record.studentName }}</td>
+                        <td>{{ formatTime(record.initialTime) }}</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="!(notifyEmergency && notifyEmergency.length > 0)">
+                  <p>No hay notificaciones para Emergencias</p>
+                </div>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+          </ng-container>
+        </div>
+        </mat-tab>
         <mat-tab label="Notificaciones por Salon">  </mat-tab>
         <mat-tab label="Notificaciones por Alumno">  </mat-tab>
         <mat-tab label="Notificaciones por Usuario">  </mat-tab>

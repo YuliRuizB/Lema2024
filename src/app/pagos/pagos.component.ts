@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { UsersService } from '../shared/services/usuarios.service';
@@ -6,6 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { productosTable } from '../productos/productos.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { CargaPagoComponent } from './carga-pago/carga-pago.component';
+import { VerPagoComponent } from './ver-pago/ver-pago.component';
 
 @Component({
   selector: 'app-pagos',
@@ -16,14 +19,16 @@ export class PagosComponent implements OnInit {
   user: any;
   client:any[] =[];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  displayedColumns: string[] = ['displayName', 'productName', 'amount', 'charge_type', 'date_created'];
-  displayedColumnsS: string[] = ['claveGrado','displayName', 'productName', 'amount', 'charge_type', 'date_created'];
+  readonly dialog = inject(MatDialog);
+  displayedColumns: string[] = ['date_created', 'displayName', 'productName', 'amount', 'charge_type', 'claveCliente'];
+  //displayedColumnsS: string[] = ['claveGrado','displayName', 'productName', 'amount', 'charge_type', 'date_created'];
   displayedColumnsM: string[] = ['date_created','claveGrado','displayName', 'productName', 'amount', 'claveCliente'];
   ELEMENT_DATA: productosTable[] = [];
+  ELEMENT_DATAM: productosTable[] = [];
   dataSourceG = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
-  dataSourceS = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
-  dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
+ // dataSourceS = new MatTableDataSource<productosTable>(this.ELEMENT_DATA); 
+  dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATAM);
+ 
   acumuladoMes:any;
   months = [
     { value: '01', viewValue: 'Enero' },
@@ -52,8 +57,11 @@ export class PagosComponent implements OnInit {
             this.client = data1;     
             this.usersService.getPaymentbyCustomer(this.user.claveCliente).subscribe((data: any) => {        
               this.ELEMENT_DATA = data;
+              this.ELEMENT_DATAM = data;
+              
               this.dataSourceG = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
-              this.dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
+              this.dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATAM); 
+              console.log(this.dataSourceM);
             }); 
         });   
         }                
@@ -72,15 +80,22 @@ export class PagosComponent implements OnInit {
 
      this.usersService.getPaymentbyDatebyCustomer(this.user.claveCliente, startDate, endDate).subscribe((data: any) => {        
       if (data.length > 0) {
-        const totalAmount = data.reduce((total : any, item: any) => total + item.amount, 0);
-        console.log(totalAmount);
-        this.acumuladoMes = totalAmount;
-    
-        this.ELEMENT_DATA = data;
-        this.dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
+        console.log(data);
+        const totalAmount = data.reduce((total: any, item: any) => {
+          const amount = parseFloat(item.amount);
+          if (isNaN(amount)) {
+            console.warn("Invalid amount:", item.amount);
+            return total;
+          }
+          return total + amount;
+        }, 0);      
+          console.log("Total Amount:", totalAmount);
+          this.acumuladoMes = totalAmount;
+          this.ELEMENT_DATA = data;
+      //  this.dataSourceM = new MatTableDataSource<productosTable>(this.ELEMENT_DATA);
      
       } else {
-        this.dataSourceM = new MatTableDataSource<productosTable>([]);
+        //this.dataSourceM = new MatTableDataSource<productosTable>([]);
         this.acumuladoMes =0;
         this.notifyUser("No existen pagos en este mes.", "error");
     
@@ -96,7 +111,17 @@ export class PagosComponent implements OnInit {
         duration: 5000,
       });
     }
-  
+  addPago(){
+    const dialogRef = this.dialog.open(CargaPagoComponent, {
+      width: '700px',
+      height: '600px',
+      data: "0" 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   ngOnInit(): void {
   }
 
@@ -115,7 +140,15 @@ export class PagosComponent implements OnInit {
   }
 
   verPago(id:any){
+    const dialogRef = this.dialog.open(VerPagoComponent, {
+      width: '700px',
+      height: '500px',
+      data:id 
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   borrarPago(id:any){
     
@@ -129,17 +162,17 @@ export class PagosComponent implements OnInit {
 
   applyFilterS(event: any) {
     const filterValue = event.target.value.trim().toLowerCase();
-    this.dataSourceS.filter = filterValue;    
+  //  this.dataSourceS.filter = filterValue;    
   }
 
 
   applyFilterMonth(event: any) {
     const filterValue = event.target.value.trim().toLowerCase();
-    this.dataSourceM.filter = filterValue;    
+//    this.dataSourceM.filter = filterValue;    
   }
 
   clearFilterSalon(){
-    this.dataSourceS.filter = '';
+  //  this.dataSourceS.filter = '';
   }
 
  
@@ -155,4 +188,5 @@ export interface pagosTable {
   productName:string;
   status:string;  
   date_created:Date;
+  urlRef:string;
 }

@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>Ver Notificación </h2>
+<mat-dialog-content class="mat-typography">        
+    <mat-list>
+        <div>  
+            <form [formGroup]="formG" (ngSubmit)="onSubmit()">
+
+                <mat-list-item>Criterios</mat-list-item>
+                <mat-divider></mat-divider>   
+                <mat-form-field class="example-full-width">
+                    <mat-label>Activo</mat-label>
+                    <input matInput formControlName="active">            
+                  </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo de Notificación</mat-label>              
+                <input matInput formControlName="notify_Type">            
+            </mat-form-field>          
+         <mat-form-field class="example-full-width">
+                <mat-label>Repeticiones al Día</mat-label>
+                <input matInput formControlName="repeatAtDay">            
+              </mat-form-field>      
+            
+              <mat-list-item>Segmentos</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-form-field class="example-full-width">
+                <mat-label>Grado</mat-label>
+                <input matInput formControlName="claveGrado">            
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Alumnos</mat-label>
+                <input matInput formControlName="claveAlumno">            
+              </mat-form-field>    
+             
+              <mat-list-item>Período</mat-list-item>
+              <mat-divider></mat-divider>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Inicia</mat-label>
+                    <input matInput formControlName="startDate" >            
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Termina</mat-label>
+                    <input matInput formControlName="expiredDate" >            
+                  </mat-form-field>                       
+                  
+                  <mat-list-item>Contenido</mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-form-field class="example-full-width" >
+                    <mat-label>Titulo</mat-label>
+                    <input matInput formControlName="title" >            
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field class="example-full-width" >
+                    <mat-label>SubTitulo</mat-label>
+                    <input matInput formControlName="subTitle" >            
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field class="example-full-width" style="height: 300px;">
+                    <mat-label>Descripción</mat-label>                   
+                    <textarea matInput formControlName="description"  
+                     placeholder="Descripción de la notifcacion... "></textarea>          
+                  </mat-form-field>         
+                  
+                  <mat-list-item>Extras</mat-list-item>
+                  <mat-divider></mat-divider>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Imagen</mat-label>
+                    <input matInput formControlName="imageURL" >            
+                  </mat-form-field>             
+    </form>
+    </div>
+</mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+  </mat-dialog-actions>
+  

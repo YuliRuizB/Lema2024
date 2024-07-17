@@ -67,9 +67,9 @@ export class ProductosComponent implements OnInit {
 
   addProduct(){
     const dialogRef = this.dialog.open(CargaProductoComponent, {
-      width: '600px',
-      height: '400px',
-      data: "salon" 
+      width: '700px',
+      height: '500px',
+      data: "0" 
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -78,7 +78,16 @@ export class ProductosComponent implements OnInit {
   }
 
   verProducto(id:any){
+    console.log(id);
+    const dialogRef = this.dialog.open(CargaProductoComponent, {
+      width: '700px',
+      height: '500px',
+      data: id
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   borrarProducto(id: any) {
@@ -98,4 +107,5 @@ export interface productosTable {
   date_to:Date;
   type:string;  
   date_created:Date;
+  uid:string;
 }
